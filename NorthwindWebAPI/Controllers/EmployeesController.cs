@@ -127,10 +127,37 @@ namespace NorthwindWebAPI.Controllers
             return result;
         }
 
-            //
+        [HttpGet]
+        [Route("ProductXID&Anio")]
+        public IEnumerable<Object> productosdefecha()
+        {
 
-            // GET: api/Employees/5
-            [HttpGet("{id}")]
+            var result = (
+            from p in _context.Products
+            from d in _context.Movementdetails
+            from m in _context.Movements
+            from w in _context.Warehouses
+            where p.Products == d.Products &&
+
+            where m.MovementId == d.MovementId &&
+
+            where w.WarehouseID == m.WarehouseID &&
+
+            select new
+            {
+                m.Date,
+                (m.Quantity * p.UnitPrice),
+            }).GroupBy(e => e.Date.Year).Select(e => new
+            {
+                Anio = e.Key,
+                Cantidad = e.Sum(g => g.UnitPrice)
+            });
+        }
+
+        //
+
+        // GET: api/Employees/5
+        [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
