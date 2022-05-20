@@ -84,8 +84,7 @@ namespace NorthwindWebAPI.Controllers
         {
             int idpro = 12;
             int YearStart = 1997;
-            //return _context.Movements.Where((m => m.Movementdetails.Where(d => d.ProductId.Equals(idpro)) && m.Date.Year >= YearStart && m.Date.Year <= YearEnd)).
-            //var result = from m in _context.Movements where (m.Movementdetails.Where(d => d.ProductId.Equals(idpro)) &&  m.Date.Year == YearStart);
+            
             var result = (
                           from m in _context.Movements
                           from d in _context.Movementdetails
@@ -106,7 +105,7 @@ namespace NorthwindWebAPI.Controllers
 
         [HttpGet]
         [Route("ProductXAnio")]
-        public IEnumerable<Object> productosdefecha()
+        public IEnumerable<Object> productosdefecha2()
         {
             var result = (
                           from m in _context.Movements
@@ -125,6 +124,7 @@ namespace NorthwindWebAPI.Controllers
                               Anio = e.Key,
                               Cantidad = e.Sum(g => g.Quantity)
                           });
+            return result;
         }
 
             //

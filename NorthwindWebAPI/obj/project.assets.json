@@ -7401,23 +7401,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+    "C:\\Users\\linse\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\EJ22_PW3A\\unidad5\\NorthwindWebAPI\\NorthwindWebAPI\\NorthwindWebAPI\\NorthwindWebAPI.csproj",
+      "projectUniqueName": "C:\\Users\\linse\\Documents\\Github\\APINORTHWIND\\NorthwindWebAPI\\NorthwindWebAPI.csproj",
       "projectName": "NorthwindWebAPI",
-      "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\EJ22_PW3A\\unidad5\\NorthwindWebAPI\\NorthwindWebAPI\\NorthwindWebAPI\\NorthwindWebAPI.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\EJ22_PW3A\\unidad5\\NorthwindWebAPI\\NorthwindWebAPI\\NorthwindWebAPI\\obj\\",
+      "projectPath": "C:\\Users\\linse\\Documents\\Github\\APINORTHWIND\\NorthwindWebAPI\\NorthwindWebAPI.csproj",
+      "packagesPath": "C:\\Users\\linse\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\linse\\Documents\\Github\\APINORTHWIND\\NorthwindWebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\linse\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -7495,7 +7495,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
