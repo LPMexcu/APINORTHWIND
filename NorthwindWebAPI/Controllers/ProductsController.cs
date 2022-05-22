@@ -117,11 +117,9 @@ namespace NorthwindWebAPI.Controllers
             var result = (
             from p in _context.Products
             from d in _context.Movementdetails
-            from m in _context.Movements
-            from w in _context.Warehouses
+            from m in _context.Movements           
             where p.ProductId == d.ProductId
-            where m.MovementId == d.MovementId
-            where w.WarehouseId == m.OriginWarehouseId
+            where m.MovementId == d.MovementId           
             select new
             {
                 m.Date,
@@ -130,8 +128,8 @@ namespace NorthwindWebAPI.Controllers
             {
                 mes = e.Key,
                 Cantidad = e.Sum(g => g.Quantity)
-                
-            });
+
+            }).Take(5);
             return result;
         }
 
@@ -187,7 +185,39 @@ namespace NorthwindWebAPI.Controllers
             });
 
             return result;
-        }        
+        }
+
+        [HttpGet]
+        [Route("montoXalmacen/{id}/{ano}/{ware}")]
+        public IEnumerable<Object> productosdefecha6(int id,int ano,int ware)
+        {
+            var anio = ano;
+            var idpro = id;
+            var alma = ware;
+            var result = (
+            from p in _context.Products
+            from d in _context.Movementdetails
+            from m in _context.Movements
+            from w in _context.Warehouses
+            where p.ProductId == d.ProductId &&
+            m.MovementId == d.MovementId &&
+            w.WarehouseId == m.OriginWarehouseId &&
+            p.ProductId == idpro &&
+            m.Date.Year == anio &&
+            m.OriginWarehouseId == alma
+
+            select new
+            {
+                m.Date,
+                V = p.UnitPrice * d.Quantity
+            }).GroupBy(e => e.Date.Month).Select(e => new
+            {
+                mes = e.Key,
+                cantidad = e.Sum(g => g.V)
+            });
+
+            return result;
+        }
 
     }
 }
