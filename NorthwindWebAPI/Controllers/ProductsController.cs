@@ -128,8 +128,9 @@ namespace NorthwindWebAPI.Controllers
                 d.Quantity,
             }).GroupBy(e => e.Date.Month).Select(e => new
             {
-                Anio = e.Key,
+                mes = e.Key,
                 Cantidad = e.Sum(g => g.Quantity)
+                
             });
             return result;
         }
@@ -160,30 +161,33 @@ namespace NorthwindWebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Meses")]
-        public IEnumerable<Object> Productosdefecha5()
+        [Route("montoXmes")]
+        public IEnumerable<Object> productosdefecha5()
         {
-            int idpro = 12;
-            int YearStart = 1997;
 
             var result = (
-                          from m in _context.Movements
-                          from d in _context.Movementdetails
-                          where m.MovementId == d.MovementId &&
-                          d.ProductId == idpro && m.Date.Year == YearStart
-                          select new
-                          {
-                              m.Date.Month,
-                              d.Quantity
-                          }
-                          ).GroupBy(e => e.Month).Select(e => new
-                          {
-                              Mes = e.Key,
-                              Cantidad = e.Sum(g => g.Quantity)
-                          });
-            return result;
-        }
+            from p in _context.Products
+            from d in _context.Movementdetails
+            from m in _context.Movements
+            from w in _context.Warehouses
+            where p.ProductId == d.ProductId
 
+            where m.MovementId == d.MovementId 
+
+            where w.WarehouseId == m.OriginWarehouseId
+
+            select new
+            {
+                m.Date,
+                V = p.UnitPrice * d.Quantity
+            }).GroupBy(e => e.Date.Month).Select(e => new
+            {
+                Anio = e.Key,
+                Cantidad = e.Sum(g => g.V)
+            });
+
+            return result;
+        }        
 
     }
 }
