@@ -27,5 +27,10 @@ namespace NorthwindWebAPI.Models
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<Movementdetail> Movementdetails { get; set; }
         public virtual ICollection<Warehouseproduct> Warehouseproducts { get; set; }
+
+        public static implicit operator int(Product v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

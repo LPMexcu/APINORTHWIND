@@ -78,81 +78,33 @@ namespace NorthwindWebAPI.Controllers
         }
 
         // Comportamiento de un producto durante un periodo de tiempo agrupado en meses
-        [HttpGet]
-        [Route("Meses")]
-        public IEnumerable<Object> productosdefecha()
-        {
-            int idpro = 12;
-            int YearStart = 1997;
-            
-            var result = (
-                          from m in _context.Movements
-                          from d in _context.Movementdetails
-                          where m.MovementId == d.MovementId &&
-                          d.ProductId == idpro && m.Date.Year == YearStart
-                          select new
-                          {
-                              m.Date.Month,
-                              d.Quantity
-                          }
-                          ).GroupBy(e => e.Month).Select(e => new
-                          {
-                              Mes = e.Key,
-                              Cantidad = e.Sum(g => g.Quantity)
-                          });
-            return result;
-        }
+        
 
-        [HttpGet]
-        [Route("ProductXAnio")]
-        public IEnumerable<Object> productosdefecha2()
-        {
-            var result = (
-                          from m in _context.Movements
-                          from d in _context.Movementdetails
-                          from p in _context.Products
-                          where p.ProductId == d.ProductId
-                          where m.MovementId == d.MovementId 
-                          where m.MovementId == d.MovementId
-                          select new
-                          {
-                              m.Date.Year,
-                              d.Quantity
-                          }
-                          ).GroupBy(e => e.Year).Select(e => new
-                          {
-                              Anio = e.Key,
-                              Cantidad = e.Sum(g => g.Quantity)
-                          });
-            return result;
-        }
-
-        [HttpGet]
-        [Route("ProductXID&Anio")]
-        public IEnumerable<Object> productosdefecha()
-        {
-
-            var result = (
-            from p in _context.Products
-            from d in _context.Movementdetails
-            from m in _context.Movements
-            from w in _context.Warehouses
-            where p.Products == d.Products &&
-
-            where m.MovementId == d.MovementId &&
-
-            where w.WarehouseID == m.WarehouseID &&
-
-            select new
-            {
-                m.Date,
-                (m.Quantity * p.UnitPrice),
-            }).GroupBy(e => e.Date.Year).Select(e => new
-            {
-                Anio = e.Key,
-                Cantidad = e.Sum(g => g.UnitPrice)
-            });
-        }
+        //[HttpGet]
+        //[Route("ProductXAnio")]
+        //public IEnumerable<Object> Productosdefecha2()
+        //{
+        //    var result = (
+        //                  from m in _context.Movements
+        //                  from d in _context.Movementdetails
+        //                  from p in _context.Products
+        //                  where p.ProductId == d.ProductId
+        //                  where m.MovementId == d.MovementId 
+        //                  where m.MovementId == d.MovementId
+        //                  select new
+        //                  {
+        //                      m.Date.Year,
+        //                      d.Quantity
+        //                  }
+        //                  ).GroupBy(e => e.Year).Select(e => new
+        //                  {
+        //                      Anio = e.Key,
+        //                      Cantidad = e.Sum(g => g.Quantity)
+        //                  });
+        //    return result;
+        //}
+        
+       
 
         //
 
