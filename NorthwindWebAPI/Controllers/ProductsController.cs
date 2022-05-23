@@ -108,7 +108,7 @@ namespace NorthwindWebAPI.Controllers
         /// ////////////////////////
         /// </summary>
         /// <returns></returns>
-        
+
         [HttpGet]
         [Route("ProductXID&Anio")]
         public IEnumerable<Object> Productosdefecha3()
@@ -117,9 +117,9 @@ namespace NorthwindWebAPI.Controllers
             var result = (
             from p in _context.Products
             from d in _context.Movementdetails
-            from m in _context.Movements           
+            from m in _context.Movements
             where p.ProductId == d.ProductId
-            where m.MovementId == d.MovementId           
+            where m.MovementId == d.MovementId
             select new
             {
                 m.Date,
@@ -139,7 +139,7 @@ namespace NorthwindWebAPI.Controllers
         {
             int idpro = id;
             int YearStart = ano;
-            
+
             var result = (
                           from m in _context.Movements
                           from d in _context.Movementdetails
@@ -170,7 +170,7 @@ namespace NorthwindWebAPI.Controllers
             from w in _context.Warehouses
             where p.ProductId == d.ProductId
 
-            where m.MovementId == d.MovementId 
+            where m.MovementId == d.MovementId
 
             where w.WarehouseId == m.OriginWarehouseId
 
@@ -189,7 +189,7 @@ namespace NorthwindWebAPI.Controllers
 
         [HttpGet]
         [Route("montoXalmacen/{id}/{ano}/{ware}")]
-        public IEnumerable<Object> productosdefecha6(int id,int ano,int ware)
+        public IEnumerable<Object> productosdefecha6(int id, int ano, int ware)
         {
             var anio = ano;
             var idpro = id;
@@ -218,6 +218,131 @@ namespace NorthwindWebAPI.Controllers
 
             return result;
         }
+        //trimestre 1
+        [HttpGet]
+        [Route("Trimestre1Top5")]
+        public IEnumerable<Object> cuatrimestre1()
+        {
+
+            var movementsdetails = _context.Movementdetails.ToList();
+            var products = _context.Products.ToList();
+            var movements = _context.Movements.ToList();
+
+            var data = movementsdetails.Where(x => x.Movement.Date >= new DateTime(1997, 1, 1) && x.Movement.Date <= new DateTime(1997, 3, 31)).ToList();
+
+
+            //sum
+            var result = products.Join(data,
+                            p => p.ProductId,
+                            d => d.ProductId,
+                            (p, d) => new
+                            {
+                                p.ProductName,
+                                d.Quantity
+                            }).GroupBy(e => e.ProductName).Select(e => new
+                            {
+                                ProductName = e.Key,
+                                Cantidad = e.Sum(g => g.Quantity)
+                            }).OrderByDescending(e => e.Cantidad).Take(5);
+
+
+
+            return result;
+        }
+        //trimestre 2
+        [HttpGet]
+        [Route("Trimestre2Top5")]
+        public IEnumerable<Object> cuatrimestre2()
+        {
+
+            var movementsdetails = _context.Movementdetails.ToList();
+            var products = _context.Products.ToList();
+            var movements = _context.Movements.ToList();
+
+            var data = movementsdetails.Where(x => x.Movement.Date >= new DateTime(1997, 4, 1) && x.Movement.Date <= new DateTime(1997, 6, 30)).ToList();
+
+
+            //sum
+            var result = products.Join(data,
+                            p => p.ProductId,
+                            d => d.ProductId,
+                            (p, d) => new
+                            {
+                                p.ProductName,
+                                d.Quantity
+                            }).GroupBy(e => e.ProductName).Select(e => new
+                            {
+                                ProductName = e.Key,
+                                Cantidad = e.Sum(g => g.Quantity)
+                            }).OrderByDescending(e => e.Cantidad).Take(5);
+
+
+
+            return result;
+        }
+        //trimestre 3
+        [HttpGet]
+        [Route("Trimestre3Top5")]
+        public IEnumerable<Object> cuatrimestre3()
+        {
+            var movementsdetails = _context.Movementdetails.ToList();
+            var products = _context.Products.ToList();
+            var movements = _context.Movements.ToList();
+
+            var data = movementsdetails.Where(x => x.Movement.Date >= new DateTime(1997, 7, 1) && x.Movement.Date <= new DateTime(1997, 9, 30)).ToList();
+
+
+            //sum
+            var result = products.Join(data,
+                            p => p.ProductId,
+                            d => d.ProductId,
+                            (p, d) => new
+                            {
+                                p.ProductName,
+                                d.Quantity
+                            }).GroupBy(e => e.ProductName).Select(e => new
+                            {
+                                ProductName = e.Key,
+                                Cantidad = e.Sum(g => g.Quantity)
+                            }).OrderByDescending(e => e.Cantidad).Take(5);
+
+
+
+            return result;
+        }
+        //trimestre 4
+        [HttpGet]
+        [Route("Trimestre4Top5")]
+        public IEnumerable<Object> cuatrimestre4()
+        {
+
+            var movementsdetails = _context.Movementdetails.ToList();
+            var products = _context.Products.ToList();
+            var movements = _context.Movements.ToList();
+
+            var data = movementsdetails.Where(x => x.Movement.Date >= new DateTime(1997, 10, 1) && x.Movement.Date <= new DateTime(1997, 12, 31)).ToList();
+
+            
+            //sum
+            var result = products.Join(data,
+                            p => p.ProductId,
+                            d => d.ProductId,
+                            (p, d) => new
+                            {
+                                p.ProductName,
+                                d.Quantity
+                            }).GroupBy(e => e.ProductName).Select(e => new
+                            {
+                                ProductName = e.Key,
+                                Cantidad = e.Sum(g => g.Quantity)
+                            }).OrderByDescending(e => e.Cantidad).Take(5);
+
+
+
+            return result;
+        }
+
+
 
     }
 }
