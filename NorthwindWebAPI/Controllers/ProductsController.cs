@@ -110,7 +110,7 @@ namespace NorthwindWebAPI.Controllers
         /// <returns></returns>
         
         [HttpGet]
-        [Route("ProductXID&Anio")]
+        [Route("CuatrimestreTop5")]
         public IEnumerable<Object> Productosdefecha3()
         {
 
@@ -119,17 +119,12 @@ namespace NorthwindWebAPI.Controllers
             from d in _context.Movementdetails
             from m in _context.Movements           
             where p.ProductId == d.ProductId
-            where m.MovementId == d.MovementId           
+            where m.MovementId == d.MovementId  &&
+            m.Date.Year == 1997
             select new
             {
-                m.Date,
-                d.Quantity,
-            }).GroupBy(e => e.Date.Month).Select(e => new
-            {
-                mes = e.Key,
-                Cantidad = e.Sum(g => g.Quantity)
-
-            }).Take(5);
+                p.ProductName,
+            }).Take(5).orderby d.Quantity descending;
             return result;
         }
 
