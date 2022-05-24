@@ -188,10 +188,10 @@ namespace NorthwindWebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("montoXalmacen/{id}/{ano}/{ware}")]
-        public IEnumerable<Object> productosdefecha6(int id, int ano, int ware)
+        [Route("montoXalmacen/{id}/{ware}")]
+        public IEnumerable<Object> productosdefecha6(int id, int ware)
         {
-            var anio = ano;
+            
             var idpro = id;
             var alma = ware;
             var result = (
@@ -203,17 +203,20 @@ namespace NorthwindWebAPI.Controllers
             m.MovementId == d.MovementId &&
             w.WarehouseId == m.OriginWarehouseId &&
             p.ProductId == idpro &&
-            m.Date.Year == anio &&
             m.OriginWarehouseId == alma
 
             select new
             {
+                m.Date.Year,
                 m.Date,
                 V = p.UnitPrice * d.Quantity
-            }).GroupBy(e => e.Date.Month).Select(e => new
+            }).GroupBy(e => e.Date).Select(e => new
             {
-                mes = e.Key,
+                fecha = e.Key,
+                mes = e.Key.Month,
+                anio = e.Key.Year,
                 cantidad = e.Sum(g => g.V)
+               
             });
 
             return result;
